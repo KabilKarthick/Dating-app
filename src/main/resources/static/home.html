@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Invite Your Partner - Dating App</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #ffe6f0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 100vh;
+        }
+
+        .home-card {
+            background: white;
+
+            width: 380px;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+
+            text-align: center;
+        }
+
+        h1 {
+            color: #e91e63;
+
+            margin-bottom: 10px;
+        }
+
+        .welcome {
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px;
+
+            margin: 10px 0;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 15px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #e91e63;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #c2185b;
+        }
+
+        #message {
+            margin-top: 15px;
+            min-height: 20px;
+            color: #2e7d32;
+            word-break: break-word;
+        }
+
+        #message.error {
+            color: #c62828;
+        }
+
+        .logout {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .logout a {
+            color: #e91e63;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="home-card">
+
+    <h1>Invite Your Partner ❤️</h1>
+
+    <p class="welcome">Welcome, <span id="userName"></span>!</p>
+
+    <form id="inviteForm">
+
+        <input
+                type="email"
+                id="partnerEmail"
+                placeholder="Enter your partner's email"
+                required>
+
+        <button type="submit">
+            Send Invitation ❤️
+        </button>
+
+    </form>
+
+    <p id="message"></p>
+
+    <div class="logout">
+        Not you? <a href="login.html">Logout</a>
+    </div>
+
+</div>
+
+<script>
+
+    const userName = sessionStorage.getItem("userName");
+    const userEmail = sessionStorage.getItem("userEmail");
+
+    if (!userEmail) {
+        window.location.href = "login.html";
+    } else {
+        document.getElementById("userName").innerText = userName || userEmail;
+    }
+
+    document.getElementById("inviteForm")
+        .addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+            const partnerEmail =
+                document.getElementById("partnerEmail").value;
+
+            const messageBox = document.getElementById("message");
+            messageBox.classList.remove("error");
+
+            try {
+
+                const response = await fetch(
+                    "/invitation?invitedEmail=" + encodeURIComponent(partnerEmail),
+                    {
+                        method: "POST"
+                    }
+                );
+
+                const result = await response.json().catch(() => ({}));
+
+                if (response.ok) {
+
+                    messageBox.innerText = result.message || "Invitation sent ❤️";
+                    document.getElementById("inviteForm").reset();
+
+                } else {
+
+                    messageBox.classList.add("error");
+                    messageBox.innerText = result.error || "Could not send invitation ❌";
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+                messageBox.classList.add("error");
+                messageBox.innerText = "Something went wrong ❌";
+
+            }
+
+        });
+
+</script>
+
+</body>
+
+</html>

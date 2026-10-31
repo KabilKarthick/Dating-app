@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Plan Our Date</title>
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet CSS -->
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>Let's plan our date ❤️</h1>
+
+    <p>Tell me the details 😊</p>
+
+    <form id="dateForm">
+
+        <label for="name">Your Name</label>
+
+        <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                required
+        >
+
+        <label for="mobile">Your Mobile</label>
+
+        <input
+                type="text"
+                id="mobile"
+                placeholder="Enter your mobile number"
+                required
+        >
+
+        <label for="date">Choose Date</label>
+
+        <input
+                type="date"
+                id="date"
+                required
+        >
+
+        <label for="time">Choose Time</label>
+
+        <input
+                type="time"
+                id="time"
+                required
+        >
+
+        <label for="message">Message</label>
+
+        <textarea
+                id="message"
+                placeholder="Write something..."
+        ></textarea>
+
+
+        <!-- LOCATION -->
+
+        <h2>Choose Your Date Location 📍</h2>
+
+        <div id="map"></div>
+
+
+        <button
+                type="submit"
+                class="submit-btn">
+            Confirm Date ❤️
+        </button>
+
+    </form>
+
+    <p id="result"></p>
+
+</div>
+
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Map JavaScript -->
+<script src="date.js"></script>
+
+<!-- Existing application JavaScript -->
+<script src="script.js"></script>
+
+</body>
+
+</html>
